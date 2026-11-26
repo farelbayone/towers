@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Towers</title>
+<meta name="description" content="Towers: tower defense labirin dengan misi, tantangan harian, dan leaderboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Space+Grotesk:wght@700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<section id="home" class="screen">
+  <div class="topbar">
+    <button id="profileBtn" class="pill"></button>
+    <div class="grow"></div>
+    <button class="pill" data-open="board"><i data-icon="trophy"></i> Leaderboard</button>
+    <button class="pill" data-open="guide"><i data-icon="help"></i> Panduan</button>
+  </div>
+  <div class="hero">
+    <h1>TOWERS</h1>
+    <p>Bangun labirin dari menaramu. Belokkan musuh. Pertahankan istana.</p>
+    <button id="continueBtn" class="primary big"></button>
+  </div>
+  <div class="modes-grid">
+    <button class="mode" data-go="campaign" style="--c:#5eead4"><i data-icon="flag"></i><b>Kampanye</b><span>24 misi, 4 bab, 72 bintang</span><em id="mCampaign"></em></button>
+    <button class="mode" data-go="daily" style="--c:#fbbf24"><i data-icon="sun"></i><b>Tantangan Harian</b><span id="mDaily"></span><em id="mDailyBest"></em></button>
+    <button class="mode" data-go="free" style="--c:#60a5fa"><i data-icon="map"></i><b>Main Bebas</b><span>6 peta, 3 tingkat, 15 gelombang</span><em>Atur sendiri</em></button>
+    <button class="mode" data-go="endless" style="--c:#c084fc"><i data-icon="loop"></i><b>Tanpa Akhir</b><span>Bertahan selama mungkin</span><em>Kejar skor</em></button>
+  </div>
+  <div class="awards"><h2>Pencapaian</h2><div id="awardList"></div></div>
+</section>
+
+<section id="select" class="screen" hidden>
+  <div class="topbar"><button class="pill" data-go="home"><i data-icon="back"></i> Beranda</button><div class="grow"></div><b id="selectTitle"></b></div>
+  <div id="selectBody"></div>
+</section>
+
+<section id="game" class="screen" hidden>
+  <header>
+    <button id="bMenu" class="iconbtn" title="Menu / jeda"><i data-icon="home"></i></button>
+    <div class="title"><b id="gTitle"></b><small id="gSub"></small></div>
+    <div class="stats">
+      <div class="stat red" title="Nyawa"><i data-icon="heart"></i><b id="lives">0</b></div>
+      <div class="stat yellow" title="Koin"><i data-icon="coin"></i><b id="gold">0</b></div>
+      <div class="stat blue" title="Gelombang"><i data-icon="wave"></i><b id="wave">0</b></div>
+      <div class="stat score" title="Skor"><i data-icon="star"></i><b id="score">0</b></div>
+    </div>
+    <nav>
+      <button id="bPath" class="iconbtn" title="Pathfinding (J)"><i data-icon="route"></i></button>
+      <button id="bSpeed" class="iconbtn" title="Kecepatan (F)">1×</button>
+      <button id="bPause" class="iconbtn" title="Jeda (P)"></button>
+      <button id="bSound" class="iconbtn" title="Suara (M)"></button>
+      <button class="iconbtn" data-open="guide" title="Panduan (H)"><i data-icon="help"></i></button>
+    </nav>
+  </header>
+  <main>
+    <div id="boardWrap">
+      <div id="stage">
+        <canvas id="board" aria-label="Peta permainan"></canvas>
+        <div id="banner" aria-live="polite"></div>
+        <div id="combo"></div>
+      </div>
+      <div id="hint" aria-live="polite"></div>
+      <div id="coach" hidden>
+        <div class="cstep" id="cstep"></div><p id="ctext"></p>
+        <div class="row"><button id="cskip">Lewati</button><button id="cnext" class="primary">Lanjut</button></div>
+      </div>
+    </div>
+    <aside>
+      <div class="card" id="goals" hidden></div>
+      <div class="card"><h3>Menara <small>klik atau seret</small></h3><div id="shop"></div></div>
+      <div class="card" id="info"></div>
+      <div class="card">
+        <div id="preview"></div>
+        <button id="bWave" class="primary"></button>
+        <div id="skills"></div>
+        <div id="perks" class="chips"></div>
+      </div>
+    </aside>
+  </main>
+</section>
+
+<div id="modal" class="overlay" hidden><div class="panel" role="dialog" aria-modal="true"><button id="mClose" class="iconbtn close" aria-label="Tutup"><i data-icon="close"></i></button><div id="mBody"></div></div></div>
+<div id="toasts" aria-live="polite"></div>
+<div id="ghost" hidden></div>
+
+<script src="config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/path.js"></script>
+<script src="js/core.js"></script>
+<script src="js/missions.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/render.js"></script>
+<script src="js/net.js"></script>
+<script src="js/guide.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

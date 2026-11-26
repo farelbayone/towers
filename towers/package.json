@@ -1,0 +1,8 @@
+{
+  "name": "towers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Towers: maze-building tower defense with replay-verified leaderboards",
+  "scripts": { "start": "node server/server.js", "test": "node tools/test.js", "simulate": "node tools/simulate.js" },
+  "engines": { "node": ">=18" }
+}

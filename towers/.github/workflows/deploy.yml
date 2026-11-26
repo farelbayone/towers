@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Test
+        run: node tools/test.js
+      - name: Build site
+        env:
+          API_URL: ${{ vars.TOWERS_API_URL }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir _site
+          cp -r index.html config.js css js data _site/
+          node -e 'const e=process.env;require("fs").writeFileSync("_site/config.js","window.TOWERS_CONFIG="+JSON.stringify({apiUrl:e.API_URL||"",supabaseUrl:e.SUPABASE_URL||"",supabaseKey:e.SUPABASE_KEY||"",githubRepo:e.REPO})+";\n")'
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

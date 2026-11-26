@@ -1,0 +1,15 @@
+# Blueprint untuk hosting server di Render (opsional).
+services:
+  - type: web
+    name: towers-api
+    runtime: node
+    buildCommand: echo "no dependencies"
+    startCommand: node server/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: ALLOWED_ORIGIN
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
